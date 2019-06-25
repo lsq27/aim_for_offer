@@ -1,7 +1,10 @@
-package 二叉搜索树的第k个结点;
+package 从上往下打印二叉树;
 
 import org.junit.jupiter.api.Test;
 import util.TreeNode;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SolutionTest {
@@ -12,6 +15,11 @@ class SolutionTest {
         root.left = new TreeNode(3);
         root.right = new TreeNode(7);
         root.left.right = new TreeNode(4);
-        assertEquals(root, solution.KthNode(root, 3));
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(5);
+        list.add(3);
+        list.add(7);
+        list.add(4);
+        assertEquals(list, solution.PrintFromTopToBottom(root));
     }
 }
