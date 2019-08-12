@@ -1,4 +1,4 @@
-package 经典算法.背包01;
+package 经典算法.背包.背包01;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,13 +29,11 @@ class SolutionTest {
     }
 
     @Test
-    void test3() {
+    void solve3() {
         Solution solution = new Solution();
         int[] v = {6, 3, 5, 4, 6};
         int[] w = {2, 2, 6, 5, 4};
         int C = 10;
-        solution.solve3(v, w, C);
-        assertEquals(15, solution.sum);
-        assertArrayEquals(new int[]{1, 1, 0, 0, 1}, solution.result);
+        assertEquals(15, solution.solve3(v, w, C));
     }
 }

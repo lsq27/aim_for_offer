@@ -92,11 +92,55 @@ public class Solution {
     }
 
     public int[] quickSort(int[] array) {
-        quickSort(array, 0, array.length);
+        quickSort(array, 0, array.length - 1);
         return array;
     }
 
-    private void quickSort(int[] array, int left, int right) {
+    public void quickSort(int[] array, int left, int right) {
+        if (left >= right)
+            return;
+        int pivot = array[left], i = left, j = right;
+        while (i < j) {
+            //j指向从右找第一个小于基准的数或等于i
+            while (j > left && array[j] >= pivot)
+                j--;
+            //i指向从左找第一个大于等于基准的数或等于j
+            while (i < right && array[i] <= pivot)
+                i++;
+            if (i < j)
+                swap(array, i, j);
+        }
+        swap(array, left, j);
+        quickSort(array, left, j - 1);
+        quickSort(array, j + 1, right);
+    }
+
+    public int[] quickSort2(int[] array) {
+        quickSort2(array, 0, array.length - 1);
+        return array;
+    }
+
+    //使用一个索引一直指向第一个大数，碰到小的就交换
+    private void quickSort2(int[] array, int left, int right) {
+        if (left >= right)
+            return;
+        int idx = left + 1;
+        for (int i = left + 1; i <= right; i++) {
+            if (array[i] <= array[left]) {
+                if (idx != i) {
+                    swap(array, i, idx);
+                }
+                idx++;
+            }
+        }
+        if (idx != left + 1)
+            swap(array, idx - 1, left);
+        quickSort2(array, left, idx - 2);
+        quickSort2(array, idx, right);
+    }
+
+    //错误写法，不能从左开始找比如一直碰到大的，突然遇到小的数，产生交换，最后索引左边的数有大有小，分割失败
+    private void quickSortWrong(int[] array, int left, int right) {
         if (right - left <= 1)
             return;
         int index = left;
@@ -106,8 +150,8 @@ public class Solution {
                 index = i;
             }
         }
-        quickSort(array, left, index);
-        quickSort(array, index + 1, right);
+        quickSortWrong(array, left, index);
+        quickSortWrong(array, index + 1, right);
     }
 
     public int[] heapSort(int[] array) {

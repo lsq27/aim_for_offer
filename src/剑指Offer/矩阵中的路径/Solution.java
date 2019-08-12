@@ -34,8 +34,7 @@ public class Solution {
                 return true;
         //向下
         if (index / cols != rows - 1 && !booleans[index + cols] && matrix[index + cols] == str[0])
-            if (hasPathHelper(index + cols, matrix, booleans, rows, cols, Arrays.copyOfRange(str, 1, str.length)))
-                return true;
+            return hasPathHelper(index + cols, matrix, booleans, rows, cols, Arrays.copyOfRange(str, 1, str.length));
         return false;
     }
 }

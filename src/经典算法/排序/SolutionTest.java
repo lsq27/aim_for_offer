@@ -87,8 +87,8 @@ class SolutionTest {
     @Test
     void testQuickSort() {
         Solution solution = new Solution();
-        int[] array1 = {120, 60, 40, 30, 24};
-        int[] result1 = {24, 30, 40, 60, 120};
+        int[] array1 = {1, 2, 3, 3, 4, 3, 2, 1, 1, 2, 3};
+        int[] result1 = {1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4};
         assertArrayEquals(result1, solution.quickSort(array1));
         int[] array2 = {};
         int[] result2 = {};
@@ -96,6 +96,20 @@ class SolutionTest {
         int[] array3 = {24};
         int[] result3 = {24};
         assertArrayEquals(result3, solution.quickSort(array3));
+    }
+
+    @Test
+    void testQuickSort2() {
+        Solution solution = new Solution();
+        int[] array1 = {1, 2, 3, 1, 3, 4, 3, 2, 1, 1, 2, 3};
+        int[] result1 = {1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 4};
+        assertArrayEquals(result1, solution.quickSort2(array1));
+        int[] array2 = {};
+        int[] result2 = {};
+        assertArrayEquals(result2, solution.quickSort2(array2));
+        int[] array3 = {24};
+        int[] result3 = {24};
+        assertArrayEquals(result3, solution.quickSort2(array3));
     }
 
     @Test

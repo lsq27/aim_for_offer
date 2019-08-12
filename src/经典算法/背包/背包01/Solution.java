@@ -1,6 +1,4 @@
-package 经典算法.背包01;
-
-import java.util.Arrays;
+package 经典算法.背包.背包01;
 
 public class Solution {
     int sum;
@@ -14,16 +12,18 @@ public class Solution {
 
     //参数也可以只用index，其余使用实例成员变量，回溯的时候C和sum反向运算,会抵消掉已经装入的物品
     public void solve1Helper(int[] v, int[] w, int C, int sum, int index, int[] result) {
-        if (index == v.length || C < w[index]) {
+        if (index == v.length) {
             if (sum > this.sum) {
                 this.sum = sum;
                 this.result = result.clone();
             }
             return;
         }
-        //装进去index
-        result[index] = 1;
-        solve1Helper(v, w, C - w[index], sum + v[index], index + 1, result);
+        if (C >= w[index]) {
+            //装进去index
+            result[index] = 1;
+            solve1Helper(v, w, C - w[index], sum + v[index], index + 1, result);
+        }
         //不装进去index
         result[index] = 0;
         solve1Helper(v, w, C, sum, index + 1, result);
@@ -54,22 +54,36 @@ public class Solution {
         }
     }
 
-    //分支界限法，时间复杂度O(n*log(n))，空间复杂度O(n)
-    public void solve3(int[] v, int[] w, int C) {
+    //贪心算法，物品可以装一部分
+    public double solve3(int[] v, int[] w, int C) {
         int n = v.length;
-        double[] d = new double[n];
+        double value = 0;
+        double[] r = new double[n];
+        boolean[] s = new boolean[n];
         for (int i = 0; i < v.length; i++) {
-            d[i] = (double) v[i] / w[i];
+            r[i] = (double) v[i] / w[i];
+            s[i] = true;
         }
-        Arrays.sort(d);
-        result = new int[n];
-        int c = C;
-        for (int i = n - 1; i >= 0; i--) {
-            if (c >= w[i]) {
-                c -= w[i];
-                sum += v[i];
-                result[i] = 1;
+
+        while (C > 0) {
+            double temp = 0;
+            int index = 0;
+            for (int i = 0; i < n; i++) {
+                if (s[i] && r[i] > temp) {
+                    temp = r[i];
+                    index = i;
+                }
+            }
+            s[index] = false;
+            if (C >= w[index]) {
+                C -= w[index];
+                value += v[index];
+            } else {
+                value += C * r[index];
+                w[index] = C;
+                C = 0;
             }
         }
+        return value;
     }
 }
